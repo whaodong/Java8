@@ -28,22 +28,20 @@ package java.util;
 import java.util.function.Consumer;
 
 /**
- * An iterator over a collection.  {@code Iterator} takes the place of
- * {@link Enumeration} in the Java Collections Framework.  Iterators
- * differ from enumerations in two ways:
+ *集合上的迭代器。
+ * 在Java集合框架中，{@code Iterator}取代了{@link Enumeration}。
+ * 迭代器与枚举有两个不同之处:
  *
  * <ul>
- *      <li> Iterators allow the caller to remove elements from the
- *           underlying collection during the iteration with well-defined
- *           semantics.
- *      <li> Method names have been improved.
+ *      <li> 迭代器允许调用者在迭代期间使用定义良好的语义从底层集合中删除元素。
+ *      <li> 方法名得到了改进。
  * </ul>
  *
  * <p>This interface is a member of the
  * <a href="{@docRoot}/../technotes/guides/collections/index.html">
  * Java Collections Framework</a>.
  *
- * @param <E> the type of elements returned by this iterator
+ * @param <E> 迭代器返回的元素类型
  *
  * @author  Josh Bloch
  * @see Collection
@@ -53,61 +51,51 @@ import java.util.function.Consumer;
  */
 public interface Iterator<E> {
     /**
-     * Returns {@code true} if the iteration has more elements.
-     * (In other words, returns {@code true} if {@link #next} would
-     * return an element rather than throwing an exception.)
+     * 如果迭代有更多的元素，返回{@code true}。
+     * (换句话说，如果{@link #next}将返回一个元素而不是抛出异常，则返回{@code true}。)
      *
-     * @return {@code true} if the iteration has more elements
+     * @return {@code true}如果迭代有更多的元素
      */
     boolean hasNext();
 
     /**
-     * Returns the next element in the iteration.
+     * 返回迭代中的下一个元素。
      *
-     * @return the next element in the iteration
-     * @throws NoSuchElementException if the iteration has no more elements
+     * @return 迭代中的下一个元素
+     * @throws NoSuchElementException 如果迭代没有更多的元素
      */
     E next();
 
     /**
-     * Removes from the underlying collection the last element returned
-     * by this iterator (optional operation).  This method can be called
-     * only once per call to {@link #next}.  The behavior of an iterator
-     * is unspecified if the underlying collection is modified while the
-     * iteration is in progress in any way other than by calling this
-     * method.
+     * 从基础集合中移除此迭代器返回的最后一个元素(可选操作)。
+     * 这个方法在每次调用{@link #next}时只能被调用一次。
+     * 如果在迭代进行时，以调用此方法以外的任何方式修改了底层集合，则迭代器的行为将不指定。
      *
      * @implSpec
-     * The default implementation throws an instance of
-     * {@link UnsupportedOperationException} and performs no other action.
+     * 默认实现抛出 {@link UnsupportedOperationException} 的实例，不执行其他操作。
      *
-     * @throws UnsupportedOperationException if the {@code remove}
-     *         operation is not supported by this iterator
+     * @throws UnsupportedOperationException 如果该迭代器不支持{@code remove}操作
      *
-     * @throws IllegalStateException if the {@code next} method has not
-     *         yet been called, or the {@code remove} method has already
-     *         been called after the last call to the {@code next}
-     *         method
+     * @throws IllegalStateException 如果 {@code next} 方法尚未被调用，或者 {@code remove} 方法在最后一次调用 {@code next} 方法之后已经被调用
      */
     default void remove() {
         throw new UnsupportedOperationException("remove");
     }
 
     /**
-     * Performs the given action for each remaining element until all elements
-     * have been processed or the action throws an exception.  Actions are
-     * performed in the order of iteration, if that order is specified.
-     * Exceptions thrown by the action are relayed to the caller.
+     * 对每个剩余的元素执行给定的操作，直到处理完所有元素或操作抛出异常。
+     * 如果指定了迭代的顺序，则按迭代的顺序执行操作。
+     * 操作抛出的异常被转发给调用者。
      *
      * @implSpec
-     * <p>The default implementation behaves as if:
+     * <p>默认实现的行为如下:
      * <pre>{@code
      *     while (hasNext())
      *         action.accept(next());
      * }</pre>
      *
-     * @param action The action to be performed for each element
-     * @throws NullPointerException if the specified action is null
+     * @param action 为每个元素执行的操作
+     * @throws NullPointerException 如果指定的操作为空
      * @since 1.8
      */
     default void forEachRemaining(Consumer<? super E> action) {
